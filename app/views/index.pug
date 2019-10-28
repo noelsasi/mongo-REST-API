@@ -1,0 +1,88 @@
+extends layout
+
+block content
+  #addBook.modal.fade(tabindex='-1', role='dialog', aria-labelledby='addBook', aria-hidden='true')
+    form(method="post", autocomplete="off", action="books/add")
+      .modal-dialog.modal-sm(role='document')     
+        .modal-content
+          .modal-header
+            h5#exampleModalLabel.modal-title Add Author
+          .modal-body
+            .col-md-12                 
+              label.col-form-label(for="name") Title
+              input.form-control.border-basic(type="text", name="title")
+              label.col-form-label(for="age") Author
+              input.form-control.border-basic(type="text", name="author")
+              label.col-form-label(for="age") Genre
+              input.form-control.border-basic(type="text", name="genre")
+              label.col-form-label(for="genre") Price
+              input.form-control.border-basic(type="text", name="price")
+              .stock-radio.mt-4
+                input(type="radio", name="addStock", value="true")
+                span In Stock
+                input.ml-5(type="radio", name="addStock", value="false")
+                span Out of Stock 
+          .modal-footer
+            button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+            button.btn.btn-primary(type='submit') Save changes
+  #editBook.modal.fade(tabindex='-1', role='dialog', aria-labelledby='editBook', aria-hidden='true')
+    form(method="post" action="books/edit")
+      .modal-dialog.modal-sm(role='document')     
+        .modal-content
+          .modal-header
+            h5#exampleModalLabel.modal-title Add Author
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span(aria-hidden='true') ×
+          .modal-body
+            .col-md-12                 
+              label.col-form-label(for="name") Title
+              input#book-title.form-control.border-basic(type="text", name="title")
+              input#book-id.form-control.border-basic.d-none(type="text", name="id")
+              label.col-form-label(for="age") Author
+              input#book-author.form-control.border-basic(type="text", name="author")
+              label.col-form-label(for="place") Genre
+              input#book-genre.form-control.border-basic(type="text", name="genre")              
+              label.col-form-label(for="genre") Price
+              input#book-price.form-control.border-basic(type="text", name="price")
+              .stock-radio.mt-4.row
+                .stock.col-md-5.p-1
+                  input.stock-in.radio-btn(type="radio", name="editStock", value="true")
+                  label(for="stock-in") In Stock
+                .stock.col-md-6.ml-1.p-1
+                  input.stock-out.radio-btn(type="radio", name="editStock", value="false")
+                  label(for="stock-out") Out of Stock 
+          .modal-footer
+            button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+            button.btn.btn-primary(type='submit') Save changes
+  .main-container
+    h1.text-center Hello, Welcome to #{title}
+    .container-fluid.mt-2.p-4
+      .btn-wrapper
+        button.btn.btn-light.btn-md.mb-3.fa.fa-plus(data-toggle="modal", data-target="#addBook")
+          span.my-fonts.ml-2 Add Book
+      .wrapper
+        each val in books
+          .my-card
+            .card-body
+              .card-title #{val.title}
+              .card-text
+                i.fa.fa-user.mr-2
+                span.my-fonts  #{val.author}
+              .card-text
+                i.fa.fa-book.mr-2 
+                span.my-fonts  #{val.genre}
+              .card-text
+                i.fa.fa-inr.mr-2 
+                span.my-fonts  #{val.price}
+              .in-stock.mt-2
+                if(val.inStock == true)                
+                  span.badge.badge-warning.p-1
+                    i.fa.fa-shopping-cart.mr-2
+                    span.my-fonts In Stock
+                else
+                  span.badge.badge-danger
+                    i.fa.fa-shopping-cart.mr-2
+                    span.my-fonts Out of Stock
+            .card-footer   
+              button.btn.btn-primary.btn-sm.mr-2(data-toggle="modal", data-target="#editBook", data-bookid = val._id,  data-title = val.title, data-author = val.author, data-genre = val.genre, data-price = val.price, data-stock = val.inStock) Edit
+              a.btn.btn-light.btn-sm(href="books/delete/"+ val._id, onclick="return confirm('are you sure want to delete this book');") Delete
