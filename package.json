@@ -1,5 +1,5 @@
 {
-  "name": "bookiee-mongo",
+  "name": "mongo-API",
   "version": "0.0.1",
   "private": true,
   "main": "app.js",

@@ -1,5 +1,5 @@
 const express = require("express");
-const config = require("./config/config");
+const config = require("./config");
 const glob = require("glob");
 const mongoose = require("mongoose");
 
@@ -15,7 +15,7 @@ models.forEach(function(model) {
 });
 const app = express();
 
-module.exports = require("./config/express")(app, config);
+// module.exports = require("./config/express")(app, config);
 require("./routes")(app);
 
 app.listen(config.port, () => {

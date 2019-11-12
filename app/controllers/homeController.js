@@ -7,9 +7,8 @@ module.exports = {
   view: function(req, res) {
     books.find((err, articles) => {
       if (err) return next(err);
-      res.render("index", {
-        title: "Books Store",
-        books: articles
+      res.send({
+        articles: articles
       });
     });
   },
@@ -25,7 +24,9 @@ module.exports = {
     book1.save((err, data) => {
       if (!err) {
         console.log(data.title + "is saved to the Db");
-        res.redirect("back");
+        res.send({
+          data: data
+        });
       } else {
         console.log("epudu error ena.. chi thu");
       }
@@ -47,7 +48,9 @@ module.exports = {
       { new: true },
       (err, doc) => {
         if (!err) {
-          res.redirect("back");
+          res.send({
+            doc: doc
+          });
         } else {
           console.log("Malli error chi, siggu ledu ra niku..");
         }
@@ -58,7 +61,9 @@ module.exports = {
   deleteBook: function(req, res) {
     books.findByIdAndRemove(req.params.id, (err, doc) => {
       if (!err) {
-        res.redirect("back");
+        res.send({
+          doc: doc
+        });
       } else {
         console.log("Malli error chi, siggu ledu ra niku..");
       }
